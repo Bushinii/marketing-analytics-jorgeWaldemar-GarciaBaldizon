@@ -9,7 +9,7 @@ gasto=st.slider("Seleccine nivel de gasto en publicicdad", 10,200,50)
 variable_x = np.array([[10], [20], [30], [40],[50]])
 variable_y = np.array([15,25,35,45,55])
 modelo_lr = LinearRegression()
-© Todos los derechos reservados Universidad Rafael Landívar URL
+#© Todos los derechos reservados Universidad Rafael Landívar URL
 modelo_lr.fit(variable_x,variable_y)
 if st.button("Predecir"):
     resultado = modelo_lr.predict([[gasto]])
