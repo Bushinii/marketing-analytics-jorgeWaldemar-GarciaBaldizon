@@ -103,22 +103,35 @@ train, test = entrenar_t_learner(df, test_size=0.30, seed=42)
 
 # --- TODO: calculen y grafiquen la curva Qini de su T-learner ---
 st.subheader("Curva Qini de su T-learner")
+
 xs_uplift, ys_uplift = curva_qini(test, "uplift_estimado")
-xs_riesgo, ys_riesgo = curva_qini(test, "prob_churn")
 qini_uplift = coeficiente_qini(xs_uplift, ys_uplift, len(test))
-qini_riesgo = coeficiente_qini(xs_riesgo, ys_riesgo, len(test))
 
 fig, ax = plt.subplots(figsize=(9, 6))
-ax.plot(xs_uplift, ys_uplift, color="#00704A", linewidth=3, label=f"T-learner (Qini={qini_uplift:+.3f})")
-ax.plot(xs_riesgo, ys_riesgo, color="#C4512F", linewidth=3, label=f"Riesgo/churn (Qini={qini_riesgo:+.3f})")
-ax.plot([0, 1], [0, ys_uplift[-1]], color="#9A988E", linestyle="--", label="Al azar")
+
+ax.plot(
+    xs_uplift,
+    ys_uplift,
+    color=GREEN,
+    linewidth=3,
+    label=f"T-learner (Qini={qini_uplift:+.3f})"
+)
+
+ax.plot(
+    [0, 1],
+    [0, ys_uplift[-1]],
+    color=GRAY,
+    linestyle="--",
+    label="Al azar"
+)
+
 ax.set_xlabel("% de la base contactada (de prueba)")
 ax.set_ylabel("Respuestas incrementales acumuladas")
-ax.set_title("Laboratorio Final — la curva Qini de su T-learner")
+ax.set_title("Curva Qini de su T-learner")
 ax.legend()
+
 plt.tight_layout()
-plt.savefig("curva_qini_laboratorio.png", dpi=150)
-plt.show()
+st.pyplot(fig)
 
 
 # --- TODO: muestren la tabla de políticas (valor por cliente y total) para el % elegido ---
